@@ -5,4 +5,5 @@ public interface IUserRepository
 {
     Task<User?> GetByIdAsync(int id);
     Task AddAsync(User project);
+    Task<User?> GetUserByEmailAndPasswordAsync(string email, string passwordHash);
 }

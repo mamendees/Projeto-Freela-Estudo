@@ -7,10 +7,12 @@ using Freelancer.Application.Commands.ProjectCommands.UpdateProject;
 using Freelancer.Application.Queries.ProjectQueries.GetAllProjects;
 using Freelancer.Application.Queries.ProjectQueries.GetProjectById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Freelancer.API.Controllers;
 [ApiController]
+[Authorize]
 [Route("api/projects")]
 public class ProjectsController : ControllerBase
 {
@@ -21,6 +23,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<IActionResult> GetAsync(string query)
     {
         var getAllProjectsQuery = new GetAllProjectsQuery(query);
@@ -29,6 +32,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "client, freelancer")]
     [ActionName(nameof(GetByIdAsync))]
     public async Task<IActionResult> GetByIdAsync(int id)
     {
@@ -44,6 +48,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPost]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> PostAsync([FromBody] CreateProjectCommand command)
     {
         if (command.Title.Length > 50)
@@ -56,7 +61,8 @@ public class ProjectsController : ControllerBase
         return CreatedAtAction(nameof(GetByIdAsync), new { id }, command);
     }
 
-    [HttpPut()]
+    [HttpPut]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> PutAsync([FromBody] UpdateProjectCommand command)
     {
         if (command.Description.Length > 200)
@@ -70,6 +76,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> DeleteAsync(int id)
     {
         var command = new DeleteProjectCommand(id);
@@ -78,6 +85,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPost("comments")]
+    [Authorize(Roles = "client, freelancer")]
     public async Task<IActionResult> PostCommentAsync([FromBody] CreateCommentCommand command)
     {
         await _mediator.Send(command);
@@ -85,6 +93,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPut("{id}/start")]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> StartAsync(int id)
     {
         var command = new StartProjectCommand(id);
@@ -93,6 +102,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPut("{id}/finish")]
+    [Authorize(Roles = "client")]
     public async Task<IActionResult> FinishAsync(int id)
     {
         var command = new FinishProjectCommand(id);
