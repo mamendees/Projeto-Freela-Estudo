@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Freelancer.Core", "Freelanc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Freelancer.Infrastructure", "Freelancer.Infrastructure\Freelancer.Infrastructure.csproj", "{EF2E54E6-04A9-4852-8D4A-77B639876F7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freelancer.Application", "Freelancer.Application\Freelancer.Application.csproj", "{2D71BD73-ADAD-4EFF-B3ED-F271152C1A81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Freelancer.Application", "Freelancer.Application\Freelancer.Application.csproj", "{2D71BD73-ADAD-4EFF-B3ED-F271152C1A81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Freelancer.UnitTests", "Freelancer.UnitTests\Freelancer.UnitTests.csproj", "{EEB4738B-1F0B-4D9E-B9EE-652B57DFE595}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{2D71BD73-ADAD-4EFF-B3ED-F271152C1A81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2D71BD73-ADAD-4EFF-B3ED-F271152C1A81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2D71BD73-ADAD-4EFF-B3ED-F271152C1A81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEB4738B-1F0B-4D9E-B9EE-652B57DFE595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEB4738B-1F0B-4D9E-B9EE-652B57DFE595}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEB4738B-1F0B-4D9E-B9EE-652B57DFE595}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEB4738B-1F0B-4D9E-B9EE-652B57DFE595}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

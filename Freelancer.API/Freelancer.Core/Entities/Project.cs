@@ -14,15 +14,29 @@ public class Project : BaseEntity
         CreatedAt = DateTime.Now;
         Status = ProjectStatusEnum.Created;
         Comments = new List<ProjectComment>();
+    }
 
+    public Project(string title, string description, int idClient, int idFreelancer, decimal totalCost, User client, User freelancer)
+    {
+        Title = title;
+        Description = description;
+        IdClient = idClient;
+        IdFreelancer = idFreelancer;
+        TotalCost = totalCost;
+
+        CreatedAt = DateTime.Now;
+        Status = ProjectStatusEnum.Created;
+        Comments = new List<ProjectComment>();
+        Client = client;
+        Freelancer = freelancer;
     }
 
     public string Title { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public int IdClient { get; private set; }
-    public User Client { get; set; }
+    public User Client { get; private set; }
     public int IdFreelancer { get; private set; }
-    public User Freelancer { get; set; }
+    public User Freelancer { get; private set; }
     public decimal TotalCost { get; private set; }
     public DateTime CreatedAt { get; private set; }
     public DateTime? StartedAt { get; private set; }

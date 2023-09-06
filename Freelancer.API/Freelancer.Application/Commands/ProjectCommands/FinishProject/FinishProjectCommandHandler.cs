@@ -9,7 +9,7 @@ public class FinishProjectCommandHandler : IRequestHandler<FinishProjectCommand,
     {
         _projectRepository = projectRepository;
     }
-
+    
     public async Task<Unit> Handle(FinishProjectCommand request, CancellationToken cancellationToken)
     {
         var project = await _projectRepository.GetByIdAsync(request.Id);
