@@ -103,10 +103,10 @@ public class ProjectsController : ControllerBase
 
     [HttpPut("{id}/finish")]
     [Authorize(Roles = "client")]
-    public async Task<IActionResult> FinishAsync(int id)
+    public async Task<IActionResult> FinishAsync(int id, [FromBody] FinishProjectCommand finishProjectCommand)
     {
-        var command = new FinishProjectCommand(id);
-        await _mediator.Send(command);
+        finishProjectCommand.Id = id;
+        await _mediator.Send(finishProjectCommand);
         return NoContent();
     }
 }

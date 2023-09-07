@@ -6,6 +6,7 @@ using Freelancer.Application.Validators;
 using Freelancer.Core.Repositories;
 using Freelancer.Core.Services;
 using Freelancer.Infrastructure.Auth;
+using Freelancer.Infrastructure.Payments;
 using Freelancer.Infrastructure.Persistence;
 using Freelancer.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -83,6 +84,8 @@ builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 
