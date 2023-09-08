@@ -69,7 +69,7 @@ public class Project : BaseEntity
 
     public bool SetAndReturnIfCanFinish()
     {
-        if (Status is ProjectStatusEnum.InProgress)
+        if (Status is ProjectStatusEnum.PaymentPending)
         {
             Status = ProjectStatusEnum.Finished;
             FinishedAt = DateTime.Now;

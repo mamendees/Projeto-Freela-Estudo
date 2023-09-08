@@ -1,24 +1,17 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Freelancer.API.Filters;
-using Freelancer.Application.Commands.ProjectCommands.CreateProject;
+using Freelancer.Application;
 using Freelancer.Application.Validators;
-using Freelancer.Core.Repositories;
-using Freelancer.Core.Services;
-using Freelancer.Infrastructure.Auth;
-using Freelancer.Infrastructure.Payments;
-using Freelancer.Infrastructure.Persistence;
-using Freelancer.Infrastructure.Persistence.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Freelancer.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddInfrastructure(builder.Configuration).AddApplication();
 
 builder.Services.AddControllers(options =>
 {
@@ -54,21 +47,6 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-
-        ValidIssuer = builder.Configuration["Jwt:Issuer"],
-        ValidAudience = builder.Configuration["Jwt:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
-    };
-});
-
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateUserCommandValidator>();
 
@@ -78,13 +56,6 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 });
 
 
-builder.Services.AddDbContext<FreelancerDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("FreelancerCs")));
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining(typeof(CreateProjectCommand)));
-builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
-builder.Services.AddScoped<ISkillRepository, SkillRepository>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddHttpClient();
 
 var app = builder.Build();
