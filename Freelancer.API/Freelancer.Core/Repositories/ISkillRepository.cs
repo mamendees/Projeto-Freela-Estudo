@@ -3,4 +3,5 @@ namespace Freelancer.Core.Repositories;
 public interface ISkillRepository
 {
     Task<List<Skill>> GetAllAsync();
+    Task AddSkillFromProject(Project project);
 }

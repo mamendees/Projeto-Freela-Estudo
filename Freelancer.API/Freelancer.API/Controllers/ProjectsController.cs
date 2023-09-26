@@ -23,10 +23,9 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "client, freelancer")]
-    public async Task<IActionResult> GetAsync(string query)
+    [AllowAnonymous]
+    public async Task<IActionResult> GetAsync([FromQuery] GetAllProjectsQuery getAllProjectsQuery)
     {
-        var getAllProjectsQuery = new GetAllProjectsQuery(query);
         var projects = await _mediator.Send(getAllProjectsQuery);
         return Ok(projects);
     }
@@ -51,13 +50,7 @@ public class ProjectsController : ControllerBase
     [Authorize(Roles = "client")]
     public async Task<IActionResult> PostAsync([FromBody] CreateProjectCommand command)
     {
-        if (command.Title.Length > 50)
-        {
-            return BadRequest();
-        }
-
         int id = await _mediator.Send(command);
-
         return CreatedAtAction(nameof(GetByIdAsync), new { id }, command);
     }
 
@@ -65,13 +58,7 @@ public class ProjectsController : ControllerBase
     [Authorize(Roles = "client")]
     public async Task<IActionResult> PutAsync([FromBody] UpdateProjectCommand command)
     {
-        if (command.Description.Length > 200)
-        {
-            return BadRequest();
-        }
-
         await _mediator.Send(command);
-
         return NoContent();
     }
 
@@ -102,7 +89,7 @@ public class ProjectsController : ControllerBase
     }
 
     [HttpPut("{id}/finish")]
-    //[Authorize(Roles = "client")]
+    [Authorize(Roles = "client")]
     [AllowAnonymous]
     public async Task<IActionResult> FinishAsync(int id, [FromBody] FinishProjectCommand finishProjectCommand)
     {

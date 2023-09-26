@@ -5,6 +5,11 @@ public class Skill : BaseEntity
     {
     }
 
+    public Skill(string description)
+    {
+        Description = description;
+    }
+
     public Skill(string description, DateTime createdAt)
     {
         Description = description;

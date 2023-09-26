@@ -1,4 +1,5 @@
 ﻿using Freelancer.Core.Entities;
+using Freelancer.Core.Models;
 using Freelancer.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,9 +17,16 @@ public class ProjectRepository : IProjectRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<List<Project>> GetAllAsync()
+    public async Task<PaginationResult<Project>> GetAllAsync(string? query, int page, int pageSize)
     {
-        return await _dbContext.Projects.ToListAsync();
+        var project = _dbContext.Projects.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(query))
+        {
+            project = project.Where(p => p.Title.Contains(query));
+        }
+
+        return await project.GetPaged(page, pageSize);
     }
 
     public async Task<Project?> GetByIdAsync(int id)
@@ -32,12 +40,10 @@ public class ProjectRepository : IProjectRepository
     public async Task AddAsync(Project project)
     {
         await _dbContext.Projects.AddAsync(project);
-        await SaveChangesAsync();
     }
 
     public async Task CreateCommentAsync(ProjectComment projectComment)
     {
         await _dbContext.ProjectComments.AddAsync(projectComment);
-        await SaveChangesAsync();
     }
 }
