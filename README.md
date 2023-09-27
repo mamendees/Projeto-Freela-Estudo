@@ -30,7 +30,7 @@
  - C# 11
  - Arquitetura Limpa
  - CQRS
- - Repository e Imediator
+ - Repository, Unit of Work e Imediator
  - FluentValidation
  - Xunit com NSubstitute
  - RabbitMQ (filas e tópicos)
